@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Segment, Message } from 'semantic-ui-react';
 
-const Auth = ({ error, values, handleChange }) => {
+const Login = ({ error, values, handleChange }) => {
     return (
         <Segment>
             <Message error header="Login Failed" content={error} />
@@ -45,9 +45,9 @@ const Auth = ({ error, values, handleChange }) => {
     );
 };
 
-Auth.propTypes = {
+Login.propTypes = {
     values: PropTypes.object.isRequired,
     handleChange: PropTypes.func.isRequired,
 };
 
-export default Auth;
+export default Login;
