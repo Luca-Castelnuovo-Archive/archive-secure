@@ -22,15 +22,16 @@ const Locked = () => {
                 <Header as="h2" color="teal" textAlign="center">
                     secure.lucacastelnuovo.nl
                 </Header>
-                <Message
-                    error
-                    header="Application Locked"
-                    list={[
-                        'Secure connection could not be established',
-                        'Connect using VPN, then click on Unlock',
-                    ]}
-                />
                 <Segment>
+                    <Message
+                        error
+                        header="Application Locked"
+                        list={[
+                            'Secure connection could not be established',
+                            'Connect using VPN, then click on Unlock',
+                        ]}
+                    />
+
                     <Button
                         color="teal"
                         fluid
@@ -39,6 +40,7 @@ const Locked = () => {
                     >
                         Unlock
                     </Button>
+
                     <Confirm
                         open={open}
                         size="mini"

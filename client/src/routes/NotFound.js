@@ -19,8 +19,9 @@ const NotFound = () => {
                 <Header as="h2" color="teal" textAlign="center">
                     secure.lucacastelnuovo.nl
                 </Header>
-                <Message info size="huge" header="Page not found!" />
                 <Segment>
+                    <Message info size="huge" header="Page not found!" />
+
                     <Button
                         color="teal"
                         fluid

@@ -1,51 +1,44 @@
-import React, { useState } from 'react';
-import { Grid, Header } from 'semantic-ui-react';
-
-import Connect from 'components/Login/Connect';
-import Auth from 'components/Login/Auth';
-import Redirect from 'components/Login/Redirect';
+import React, { useState, useEffect } from 'react';
+import { Grid, Header, Form } from 'semantic-ui-react';
+import { useHistory } from 'react-router-dom';
+import LoginForm from 'components/Auth/Login';
+import AuthService from 'services/Auth';
 
 const Login = () => {
-    const [step, setStep] = useState(1);
+    const history = useHistory();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
     const [values, setValues] = useState({
         email: '',
         password: '',
         yubikeyOtp: '',
     });
 
-    const handleChange = (input) => (event) => {
-        setValues({ ...values, [input]: event.target.value });
-    };
+    useEffect(() => AuthService.connect().then(() => setLoading(false)), []);
 
-    const renderStep = () => {
-        switch (step) {
-            case 1:
-                return (
-                    <Connect
-                        values={values}
-                        handleChange={handleChange}
-                        nextStep={() => setStep(step + 1)}
-                    />
-                );
+    const login = () => {
+        setLoading(true);
 
-            case 2:
-                return (
-                    <Auth
-                        values={values}
-                        handleChange={handleChange}
-                        nextStep={() => setStep(step + 1)}
-                    />
-                );
-
-            case 3:
-                return <Redirect />;
-
-            default:
-                return <h1>This isn't supposed to happen!</h1>;
+        if (!values.email || !values.password || !values.yubikeyOtp) {
+            return;
         }
-    };
 
-    // TODO: If loggedin go to step 3
+        AuthService.login(values)
+            .then((response) => {
+                if (!response.data.success) {
+                    setError(response.data.message);
+                }
+
+                console.log('Login Success');
+                // TODO: set application wide loggedin setting
+
+                history.push(response.data.redirect_to ?? '/dashboard');
+            })
+            .catch((error) => {
+                setLoading(false);
+                setError('Unknown error occured!');
+            });
+    };
 
     return (
         <Grid
@@ -57,7 +50,23 @@ const Login = () => {
                 <Header as="h2" color="teal" textAlign="center">
                     secure.lucacastelnuovo.nl
                 </Header>
-                {renderStep()}
+                <Form
+                    size="large"
+                    onSubmit={login}
+                    loading={loading}
+                    error={error}
+                >
+                    <LoginForm
+                        error={error}
+                        values={values}
+                        handleChange={(input) => (event) => {
+                            setValues({
+                                ...values,
+                                [input]: event.target.value,
+                            });
+                        }}
+                    />
+                </Form>
             </Grid.Column>
         </Grid>
     );
