@@ -17,7 +17,7 @@ const Dashboard = () => {
                     secure.lucacastelnuovo.nl
                 </Header>
                 <Segment>
-                    {Auth.isLoggedin ? (
+                    {Auth.isLoggedin() ? (
                         <Message success header="Logged in" />
                     ) : (
                         <Message error header="Not logged in" />

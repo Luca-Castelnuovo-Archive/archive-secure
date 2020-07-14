@@ -19,7 +19,7 @@ const Login = () => {
             Auth.connect()
                 .then(() => setLoading(false))
                 .then(() => {
-                    if (Auth.isLoggedin) {
+                    if (Auth.isLoggedin()) {
                         console.log('logged in'); // WHY IS THIS FIRING?
 
                         // return history.push('/dashboard');
