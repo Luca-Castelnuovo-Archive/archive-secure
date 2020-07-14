@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Grid, Header, Message, Segment } from 'semantic-ui-react';
+import { Grid, Header, Message, Segment, Button } from 'semantic-ui-react';
+import Auth from 'services/Auth';
 
-const NotFound = () => {
+const Dashboard = () => {
     const history = useHistory();
 
     return (
@@ -16,7 +17,11 @@ const NotFound = () => {
                     secure.lucacastelnuovo.nl
                 </Header>
                 <Segment>
-                    <Message info size="huge" header="Page not found!" />
+                    {Auth.isLoggedin ? (
+                        <Message success header="Logged in" />
+                    ) : (
+                        <Message error header="Not logged in" />
+                    )}
 
                     <Button
                         color="teal"
@@ -24,7 +29,7 @@ const NotFound = () => {
                         size="large"
                         onClick={() => history.push('/')}
                     >
-                        Go Home
+                        Logout
                     </Button>
                 </Segment>
             </Grid.Column>
@@ -32,4 +37,4 @@ const NotFound = () => {
     );
 };
 
-export default NotFound;
+export default Dashboard;

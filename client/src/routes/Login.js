@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, Header, Form } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
 import LoginForm from 'components/Auth/Login';
-import AuthService from 'services/Auth';
+import Auth from 'services/Auth';
 
 const Login = () => {
     const history = useHistory();
@@ -16,11 +16,17 @@ const Login = () => {
 
     useEffect(() => {
         const connect = () => {
-            AuthService.connect().then(() => setLoading(false));
+            Auth.connect().then(() => setLoading(false));
+
+            if (Auth.isLoggedin) {
+                console.log('logged in'); // WHY IS THIS FIRING?
+
+                // return history.push('/dashboard');
+            }
         };
 
         connect();
-    }, []);
+    }, [history]);
 
     const login = () => {
         setLoading(true);
@@ -29,14 +35,11 @@ const Login = () => {
             return;
         }
 
-        AuthService.login(values)
+        Auth.login(values)
             .then((response) => {
                 if (!response.data.success) {
                     setError(response.data.message);
                 }
-
-                console.log('Login Success');
-                // TODO: set application wide loggedin setting
 
                 history.push(response.data.redirect_to ?? '/dashboard');
             })

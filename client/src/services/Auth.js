@@ -1,23 +1,20 @@
 import Axios from 'utils/Axios';
-import LocalStorage from 'utils/LocalStorage';
+import SuperTokensRequest from 'supertokens-website/axios';
 
 const connect = () => {
     // TODO: mTLS, https://smallstep.com/hello-mtls/doc/combined/nginx/axios, https://codeburst.io/mutual-tls-authentication-mtls-de-mystified-11fa2a52e9cf
 
-    return Axios.post('/auth/connect')
-        .then((response) => {
-            if (response.data.locked) {
-                LocalStorage.setItem('locked', true);
-                window.location.reload();
+    SuperTokensRequest.init(
+        'https://try.supertokens.io',
+        440,
+        'example.com',
+        {}
+    );
 
-                return;
-            }
-        })
-        .catch((error) => {
-            LocalStorage.setItem('locked', true);
-            window.location.reload();
-        });
+    return Axios.post('/auth/connect');
 };
+
+const isLoggedin = () => SuperTokensRequest.doesSessionExist();
 
 const login = ({ email, password, yubikeyOtp }) => {
     return Axios.post('/auth/login', { email, password, yubikeyOtp });
@@ -25,5 +22,6 @@ const login = ({ email, password, yubikeyOtp }) => {
 
 export default {
     connect,
+    isLoggedin,
     login,
 };
