@@ -8,7 +8,7 @@ import {
     Confirm,
 } from 'semantic-ui-react';
 
-const LockedOut = () => {
+const Locked = () => {
     const [open, setOpen] = useState(false);
 
     const handleCancel = () => {
@@ -16,7 +16,7 @@ const LockedOut = () => {
     };
 
     const handleConfirm = () => {
-        localStorage.removeItem('lockedOut');
+        localStorage.removeItem('locked');
         window.location.reload();
 
         return;
@@ -64,4 +64,4 @@ const LockedOut = () => {
     );
 };
 
-export default LockedOut;
+export default Locked;

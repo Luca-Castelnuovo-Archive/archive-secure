@@ -15,7 +15,7 @@ const Connect = ({ values, handleChange, nextStep }) => {
         // TODO: query api for the rsa key
 
         if (values.publicKey !== Server.publicKey) {
-            localStorage.setItem('lockedOut', true);
+            localStorage.setItem('locked', true);
             window.location.reload();
 
             return;
