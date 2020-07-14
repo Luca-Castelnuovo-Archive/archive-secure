@@ -14,7 +14,13 @@ const Login = () => {
         yubikeyOtp: '',
     });
 
-    useEffect(() => AuthService.connect().then(() => setLoading(false)), []);
+    useEffect(() => {
+        const connect = () => {
+            AuthService.connect().then(() => setLoading(false));
+        };
+
+        connect();
+    }, []);
 
     const login = () => {
         setLoading(true);
