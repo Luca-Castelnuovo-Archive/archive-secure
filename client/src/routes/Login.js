@@ -16,13 +16,15 @@ const Login = () => {
 
     useEffect(() => {
         const connect = () => {
-            Auth.connect().then(() => setLoading(false));
+            Auth.connect()
+                .then(() => setLoading(false))
+                .then(() => {
+                    if (Auth.isLoggedin) {
+                        console.log('logged in'); // WHY IS THIS FIRING?
 
-            if (Auth.isLoggedin) {
-                console.log('logged in'); // WHY IS THIS FIRING?
-
-                // return history.push('/dashboard');
-            }
+                        // return history.push('/dashboard');
+                    }
+                });
         };
 
         connect();
