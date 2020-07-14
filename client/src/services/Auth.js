@@ -1,13 +1,13 @@
 import Axios from 'utils/Axios';
 
 const connect = () => {
-    return Axios.post(
-        'https://run.mocky.io/v3/ba2a669f-971d-44ee-9d59-7bf3d79b1fef'
-    );
+    // TODO: mTLS, https://smallstep.com/hello-mtls/doc/combined/nginx/axios, https://codeburst.io/mutual-tls-authentication-mtls-de-mystified-11fa2a52e9cf
+
+    return Axios.post('/auth/connect');
 };
 
-const login = ({ email, password }) => {
-    return Axios.post('/auth/login', { email, password });
+const login = ({ email, password, yubikeyOtp }) => {
+    return Axios.post('/auth/login', { email, password, yubikeyOtp });
 };
 
 export default {

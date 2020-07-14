@@ -10,16 +10,21 @@ const Connect = ({ values, handleChange, nextStep }) => {
     const submit = () => {
         setLoading(true);
 
-        Auth.connect().then((response) => {
-            if (response.data.locked) {
+        Auth.connect()
+            .then((response) => {
+                if (response.data.locked) {
+                    LocalStorage.setItem('locked', true);
+                    window.location.reload();
+
+                    return;
+                }
+
+                nextStep();
+            })
+            .catch((error) => {
                 LocalStorage.setItem('locked', true);
                 window.location.reload();
-
-                return;
-            }
-
-            nextStep();
-        });
+            });
     };
 
     return (

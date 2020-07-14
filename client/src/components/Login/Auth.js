@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Segment, Message } from 'semantic-ui-react';
+import AuthService from 'services/Auth';
 
 const Auth = ({ values, handleChange, nextStep }) => {
     const [loading, setLoading] = useState(false);
@@ -13,19 +14,28 @@ const Auth = ({ values, handleChange, nextStep }) => {
             return;
         }
 
-        // send encrypted ajax request (all requests must be encrypted with the RSA key)
-        // all recieving ajax requests must be validated with sessionstorage key
+        AuthService.login(values)
+            .then((response) => {
+                if (!response.data.success) {
+                    setError(response.data.message);
+                }
 
-        setError(); // "Account deactivated", "Credentials Invalid"
+                console.log('Login Success');
+                // TODO: set application wide loggedin setting
 
-        // nextStep();
+                nextStep();
+            })
+            .catch((error) => {
+                setLoading(false);
+                setError('Unknown error occured!');
+            });
     };
 
     return (
         <Form size="large" onSubmit={submit} loading={loading} error={error}>
-            <Segment>
-                <Message error header="Login Failed" content={error} />
+            <Message error header="Login Failed" content={error} />
 
+            <Segment>
                 <Form.Input
                     fluid
                     required

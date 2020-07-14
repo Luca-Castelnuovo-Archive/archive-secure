@@ -9,28 +9,4 @@ const Axios = axios.create({
     },
 });
 
-// TODO: encrypt decrypt data
-Axios.interceptors.request.use(
-    (config) => {
-        // perform a task before the request is sent
-        console.log('Request was sent');
-
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
-
-Axios.interceptors.response.use(
-    (response) => {
-        console.log('Response received:', response.data);
-
-        return response;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
-
 export default Axios;
