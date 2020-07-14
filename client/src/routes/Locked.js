@@ -7,7 +7,7 @@ import {
     Segment,
     Confirm,
 } from 'semantic-ui-react';
-import LocalStorage from 'utils/LocalStorage';
+import Lock from 'services/Lock';
 
 const Locked = () => {
     const [open, setOpen] = useState(false);
@@ -47,10 +47,7 @@ const Locked = () => {
                         header="Are you sure, you want to unlock?"
                         content="Failing to make sure your connection is secure could lead to data theft!"
                         onCancel={() => setOpen(false)}
-                        onConfirm={() => {
-                            LocalStorage.removeItem('locked');
-                            window.location.reload();
-                        }}
+                        onConfirm={() => Lock.disable()}
                     />
                 </Segment>
             </Grid.Column>

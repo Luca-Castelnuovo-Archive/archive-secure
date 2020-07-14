@@ -7,11 +7,16 @@ const getItem = (name) => {
 };
 
 const removeItem = (name) => {
-    return localStorage.removeItem(name);
+    localStorage.removeItem(name);
+};
+
+const removeAll = () => {
+    localStorage.clear();
 };
 
 export default {
     setItem,
     getItem,
     removeItem,
+    removeAll,
 };

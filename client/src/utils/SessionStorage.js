@@ -7,11 +7,16 @@ const getItem = (name) => {
 };
 
 const removeItem = (name) => {
-    return sessionStorage.removeItem(name);
+    sessionStorage.removeItem(name);
+};
+
+const removeAll = () => {
+    sessionStorage.clear();
 };
 
 export default {
     setItem,
     getItem,
     removeItem,
+    removeAll,
 };

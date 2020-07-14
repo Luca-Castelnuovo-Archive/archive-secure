@@ -1,7 +1,7 @@
 import axios from 'axios';
 import SuperTokensRequest from 'supertokens-website/axios';
 import Server from 'config/API';
-import LocalStorage from 'utils/LocalStorage';
+import Lock from 'services/Lock';
 
 const Axios = axios.create({
     baseURL: Server.endpoint,
@@ -15,17 +15,20 @@ SuperTokensRequest.makeSuper(Axios);
 Axios.interceptors.response.use(
     (response) => {
         if (response.data.locked) {
-            LocalStorage.setItem('locked', true);
-            window.location.reload();
-
-            return;
+            return Lock.enable();
         }
 
         return response;
     },
     (error) => {
-        LocalStorage.setItem('locked', true);
-        window.location.reload();
+        if (
+            error.response !== undefined &&
+            error.response.status === 'SESSION_EXPIRED_STATUS_CODE'
+        ) {
+            // TODO: redirect to login
+        }
+
+        // Lock.enable();
 
         return Promise.reject(error.message);
     }
