@@ -1,4 +1,5 @@
 import Axios from 'utils/Axios';
+import platform from 'platform';
 import SuperTokensRequest from 'supertokens-website/axios';
 
 const connect = () => {
@@ -17,11 +18,21 @@ const connect = () => {
 const isLoggedin = () => SuperTokensRequest.doesSessionExist();
 
 const login = ({ email, password, yubikeyOtp }) => {
-    return Axios.post('/auth/login', { email, password, yubikeyOtp });
+    return Axios.post('/auth/login', {
+        email,
+        password,
+        yubikeyOtp,
+        platform: `${platform.name} | ${platform.os}`,
+    });
+};
+
+const logout = () => {
+    return Axios.post('/auth/logout');
 };
 
 export default {
     connect,
     isLoggedin,
     login,
+    logout,
 };

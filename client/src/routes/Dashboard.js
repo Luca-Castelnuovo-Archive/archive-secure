@@ -27,7 +27,9 @@ const Dashboard = () => {
                         color="teal"
                         fluid
                         size="large"
-                        onClick={() => history.push('/')}
+                        onClick={() =>
+                            Auth.logout().then(() => history.push('/'))
+                        }
                     >
                         Logout
                     </Button>
