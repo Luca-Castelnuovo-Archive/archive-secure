@@ -1,7 +1,7 @@
 {
-    "name": "Deploy",
-    "short_name": "Deploy",
-    "description": "Auto deploy and build with Github webhooks",
+    "name": "Secure",
+    "short_name": "Secure Files",
+    "description": "Securely upload and share files",
     "start_url": "/",
     "background_color": "#000000",
     "theme_color": "#0f4a73",
