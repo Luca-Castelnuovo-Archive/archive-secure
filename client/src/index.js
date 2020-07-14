@@ -4,8 +4,8 @@ import App from 'components/App';
 import 'semantic-ui-css/semantic.min.css';
 
 ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
+    // TODO: <React.StrictMode>
+    <App />,
+    // </React.StrictMode>,
     document.getElementById('root')
 );

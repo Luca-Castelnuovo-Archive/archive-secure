@@ -1,12 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { Button, Grid, Header, Message, Segment } from 'semantic-ui-react';
 
 const NotFound = () => {
+    const history = useHistory();
+
+    const handleClick = () => {
+        history.push('/');
+    };
+
     return (
-        <div>
-            <h1>Not Found</h1>
-            <Link to="/">Go back home</Link>
-        </div>
+        <Grid
+            textAlign="center"
+            style={{ height: '100vh' }}
+            verticalAlign="middle"
+        >
+            <Grid.Column style={{ maxWidth: 450 }}>
+                <Header as="h2" color="teal" textAlign="center">
+                    secure.lucacastelnuovo.nl
+                </Header>
+                <Message info size="huge" header="Page not found!" />
+                <Segment>
+                    <Button
+                        color="teal"
+                        fluid
+                        size="large"
+                        onClick={() => handleClick()}
+                    >
+                        Go Home
+                    </Button>
+                </Segment>
+            </Grid.Column>
+        </Grid>
     );
 };
 

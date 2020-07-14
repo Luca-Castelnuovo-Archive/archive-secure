@@ -1,18 +1,53 @@
 import React, { useState } from 'react';
-import { Button, Form, Grid, Segment, Loader, Dimmer } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
+
+import Connect from 'components/Login/Connect';
+import Auth from 'components/Login/Auth';
+import Redirect from 'components/Login/Redirect';
 
 const Login = () => {
-    const [loading, setLoading] = useState(false);
+    const [step, setStep] = useState(1);
+    const [values, setValues] = useState({
+        email: '',
+        password: '',
+        yubikeyOtp: '',
+        publicKey: '',
+    });
 
-    const login = () => {
-        setLoading(true);
+    const handleChange = (input) => (event) => {
+        setValues({ ...values, [input]: event.target.value });
+    };
 
-        // Check if user provided RSA key matches the one in source code
-        // If not show error "return <InvalidServer/>"
-        // Save to sessionstorage for furhter use
+    const nextStep = () => {
+        setStep(step + 1);
+    };
 
-        // send encrypted ajax request (all requests must be encrypted with the RSA key)
-        // all recieving ajax requests must be validated with sessionstorage key
+    const renderStep = () => {
+        switch (step) {
+            case 1:
+                return (
+                    <Connect
+                        values={values}
+                        handleChange={handleChange}
+                        nextStep={nextStep}
+                    />
+                );
+
+            case 2:
+                return (
+                    <Auth
+                        values={values}
+                        handleChange={handleChange}
+                        nextStep={nextStep}
+                    />
+                );
+
+            case 3:
+                return <Redirect />;
+
+            default:
+                return <h1>This isn't supposed to happen!</h1>;
+        }
     };
 
     return (
@@ -22,38 +57,10 @@ const Login = () => {
             verticalAlign="middle"
         >
             <Grid.Column style={{ maxWidth: 450 }}>
-                <Form size="large">
-                    <Segment>
-                        <Dimmer active={loading} inverted>
-                            <Loader size="large">Logging In</Loader>
-                        </Dimmer>
-                        <Form.Input
-                            fluid
-                            icon="user"
-                            iconPosition="left"
-                            placeholder="Email"
-                        />
-                        <Form.Input
-                            fluid
-                            icon="lock"
-                            iconPosition="left"
-                            placeholder="Password"
-                            type="password"
-                        />
-                        <Form.Input
-                            fluid
-                            icon="key"
-                            iconPosition="left"
-                            placeholder="Yubikey OTP"
-                            type="password"
-                        />
-                        <Form.TextArea fluid placeholder="Server public key" />
-
-                        <Button color="teal" fluid size="large" onClick={login}>
-                            Login
-                        </Button>
-                    </Segment>
-                </Form>
+                <Header as="h2" color="teal" textAlign="center">
+                    secure.lucacastelnuovo.nl
+                </Header>
+                {renderStep()}
             </Grid.Column>
         </Grid>
     );

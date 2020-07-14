@@ -3,12 +3,17 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Login from 'routes/Login';
 import NotFound from 'routes/NotFound';
+import LockedOut from 'routes/LockedOut';
 
 const App = () => {
     useEffect(() => {
         const preloader = document.querySelector('.preloader');
         preloader.classList.add('preloader--hide');
     }, []);
+
+    if (localStorage.getItem('lockedOut')) {
+        return <LockedOut />;
+    }
 
     return (
         <Router>
