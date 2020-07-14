@@ -26,11 +26,10 @@ Axios.interceptors.response.use(
             error.response.status === 'SESSION_EXPIRED_STATUS_CODE'
         ) {
             // TODO: redirect to login
+            return;
         }
 
-        // Lock.enable();
-
-        return Promise.reject(error.message);
+        return Lock.enable();
     }
 );
 

@@ -37,18 +37,13 @@ const Login = () => {
             return;
         }
 
-        Auth.login(values)
-            .then((response) => {
-                if (!response.data.success) {
-                    setError(response.data.message);
-                }
+        Auth.login(values).then((response) => {
+            if (!response.data.success) {
+                setError(response.data.message);
+            }
 
-                history.push(response.data.redirect_to ?? '/dashboard');
-            })
-            .catch((error) => {
-                setLoading(false);
-                setError('Unknown error occured!');
-            });
+            history.push(response.data.redirect_to ?? '/dashboard');
+        });
     };
 
     return (
