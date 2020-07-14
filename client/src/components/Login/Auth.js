@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Form, Segment, Message } from 'semantic-ui-react';
 
 const Auth = ({ values, handleChange, nextStep }) => {
@@ -64,6 +65,10 @@ const Auth = ({ values, handleChange, nextStep }) => {
     );
 };
 
-// TODO: prop-types
+Auth.propTypes = {
+    values: PropTypes.object.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    nextStep: PropTypes.func.isRequired,
+};
 
 export default Auth;

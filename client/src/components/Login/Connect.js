@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Form, Segment } from 'semantic-ui-react';
-import Server from 'config/API';
+import LocalStorage from 'utils/LocalStorage';
+import Auth from 'services/Auth';
 
 const Connect = ({ values, handleChange, nextStep }) => {
     const [loading, setLoading] = useState(false);
@@ -8,45 +10,33 @@ const Connect = ({ values, handleChange, nextStep }) => {
     const submit = () => {
         setLoading(true);
 
-        if (!values.publicKey) {
-            return;
-        }
+        Auth.connect().then((response) => {
+            if (response.data.locked) {
+                LocalStorage.setItem('locked', true);
+                window.location.reload();
 
-        // TODO: query api for the rsa key
+                return;
+            }
 
-        if (values.publicKey !== Server.publicKey) {
-            localStorage.setItem('locked', true);
-            window.location.reload();
-
-            return;
-        }
-
-        sessionStorage.setItem('publicKey', values.publicKey);
-
-        // let publicKey = sessionStorage.getItem('publicKey') || '';
-        // if var empty log user out
-
-        nextStep();
+            nextStep();
+        });
     };
 
     return (
         <Form size="large" onSubmit={submit} loading={loading}>
             <Segment>
-                <Form.TextArea
-                    required
-                    placeholder="Server public key"
-                    value={values.publicKey}
-                    onChange={handleChange('publicKey')}
-                />
-
                 <Button color="teal" fluid size="large">
-                    Connect
+                    Connect to server
                 </Button>
             </Segment>
         </Form>
     );
 };
 
-// TODO: prop-types
+Connect.propTypes = {
+    values: PropTypes.object.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    nextStep: PropTypes.func.isRequired,
+};
 
 export default Connect;

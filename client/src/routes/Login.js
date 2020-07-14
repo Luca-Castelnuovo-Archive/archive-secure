@@ -3,6 +3,7 @@ import { Grid, Header } from 'semantic-ui-react';
 
 import Connect from 'components/Login/Connect';
 import Auth from 'components/Login/Auth';
+import Redirect from 'components/Login/Redirect';
 
 const Login = () => {
     const [step, setStep] = useState(1);
@@ -10,7 +11,6 @@ const Login = () => {
         email: '',
         password: '',
         yubikeyOtp: '',
-        publicKey: '',
     });
 
     const handleChange = (input) => (event) => {
@@ -24,14 +24,21 @@ const Login = () => {
                     <Connect
                         values={values}
                         handleChange={handleChange}
-                        nextStep={() => {
-                            setStep(step + 1);
-                        }}
+                        nextStep={() => setStep(step + 1)}
                     />
                 );
 
             case 2:
-                return <Auth values={values} handleChange={handleChange} />;
+                return (
+                    <Auth
+                        values={values}
+                        handleChange={handleChange}
+                        nextStep={() => setStep(step + 1)}
+                    />
+                );
+
+            case 3:
+                return <Redirect />;
 
             default:
                 return <h1>This isn't supposed to happen!</h1>;

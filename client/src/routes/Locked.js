@@ -7,20 +7,10 @@ import {
     Segment,
     Confirm,
 } from 'semantic-ui-react';
+import LocalStorage from 'utils/LocalStorage';
 
 const Locked = () => {
     const [open, setOpen] = useState(false);
-
-    const handleCancel = () => {
-        setOpen(false);
-    };
-
-    const handleConfirm = () => {
-        localStorage.removeItem('locked');
-        window.location.reload();
-
-        return;
-    };
 
     return (
         <Grid
@@ -36,9 +26,8 @@ const Locked = () => {
                     error
                     header="Application Locked"
                     list={[
-                        'Firstly, make sure you have the correct server key',
-                        'Secondly, connect using VPN',
-                        'Finally, click on "Unlock"',
+                        'Secure connection could not be established',
+                        'Connect using VPN, then click on Unlock',
                     ]}
                 />
                 <Segment>
@@ -55,8 +44,11 @@ const Locked = () => {
                         size="mini"
                         header="Are you sure, you want to unlock?"
                         content="Failing to make sure your connection is secure could lead to data theft!"
-                        onCancel={handleCancel}
-                        onConfirm={handleConfirm}
+                        onCancel={() => setOpen(false)}
+                        onConfirm={() => {
+                            LocalStorage.removeItem('locked');
+                            window.location.reload();
+                        }}
                     />
                 </Segment>
             </Grid.Column>

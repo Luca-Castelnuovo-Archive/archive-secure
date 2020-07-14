@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import LocalStorage from 'utils/LocalStorage';
 
 import Login from 'routes/Login';
 import NotFound from 'routes/NotFound';
@@ -11,7 +12,7 @@ const App = () => {
         preloader.classList.add('preloader--hide');
     }, []);
 
-    if (localStorage.getItem('locked')) {
+    if (LocalStorage.getItem('locked')) {
         return <Locked />;
     }
 
