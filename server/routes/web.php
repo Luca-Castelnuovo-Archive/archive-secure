@@ -1,26 +1,16 @@
 <?php
 
 use CQ\Middleware\JSON;
-use CQ\Middleware\RateLimit;
-use CQ\Middleware\Session;
 use CQ\Routing\Middleware;
 use CQ\Routing\Route;
 
 Route::$router = $router->get();
 Middleware::$router = $router->get();
 
-Route::get('/', 'GeneralController@index');
-Route::get('/error/{code}', 'GeneralController@error');
+Route::get('/error/{code}', 'ErrorController@error');
 
 Middleware::create(['prefix' => '/auth'], function () {
-    Route::get('/request', 'AuthController@request');
-    Route::get('/callback', 'AuthController@callback');
+    Route::get('/connect', 'AuthController@connect');
+    Route::get('/login', 'AuthController@login', JSON::class);
     Route::get('/logout', 'AuthController@logout');
-});
-
-Middleware::create(['prefix' => '/example', 'middleware' => [RateLimit::class]], function () {
-    Route::get('', 'ExampleController@index');
-    Route::post('', 'ExampleController@create', JSON::class);
-    Route::patch('/{id}', 'ExampleController@update', JSON::class);
-    Route::delete('/{id}', 'ExampleController@delete');
 });

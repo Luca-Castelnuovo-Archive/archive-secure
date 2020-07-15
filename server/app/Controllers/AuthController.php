@@ -2,8 +2,15 @@
 
 namespace App\Controllers;
 
-use CQ\Controllers\Auth;
+use CQ\Controllers\Controller;
 
-class AuthController extends Auth
+class AuthController extends Controller
 {
+    public function connect()
+    {
+        return $this->respondJson(
+            'Connection Established',
+            ['foo'=>'bar']
+        );
+    }
 }
