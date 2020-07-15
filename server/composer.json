@@ -1,8 +1,8 @@
 {
-    "name": "luca-castelnuovo/deploy",
-    "description": "Auto deploy and build with Github webhooks",
+    "name": "luca-castelnuovo/secure",
+    "description": "Securely upload and share files",
     "keywords": [
-        "deploy",
+        "secure",
         "cubequence"
     ],
     "license": "MIT",
@@ -37,7 +37,7 @@
         ]
     },
     "support": {
-        "issues": "https://github.com/Luca-Castelnuovo/Deploy/issues",
-        "source": "https://github.com/Luca-Castelnuovo/Deploy"
+        "issues": "https://github.com/Luca-Castelnuovo/Secure/issues",
+        "source": "https://github.com/Luca-Castelnuovo/Secure"
     }
 }
