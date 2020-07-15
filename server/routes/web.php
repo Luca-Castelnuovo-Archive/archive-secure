@@ -18,10 +18,6 @@ Middleware::create(['prefix' => '/auth'], function () {
     Route::get('/logout', 'AuthController@logout');
 });
 
-Middleware::create(['middleware' => [Session::class]], function () {
-    Route::get('/dashboard', 'UserController@dashboard');
-});
-
 Middleware::create(['prefix' => '/example', 'middleware' => [RateLimit::class]], function () {
     Route::get('', 'ExampleController@index');
     Route::post('', 'ExampleController@create', JSON::class);
