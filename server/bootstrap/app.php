@@ -15,6 +15,7 @@ $config->attach('app');
 $config->attach('cors');
 $config->attach('database');
 $config->attach('ratelimit');
+$config->attach('supertokens');
 
 // Debug Helper
 if (App::debug()) {
